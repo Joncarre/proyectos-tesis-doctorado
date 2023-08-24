@@ -1,0 +1,99 @@
+package AGI;
+
+import java.io.IOException;
+import java.lang.management.MemoryPoolMXBean;
+import java.lang.management.ThreadInfo;
+import java.util.Scanner;
+import java.util.Vector;
+
+import javax.management.openmbean.OpenDataException;
+import javax.swing.InputMap;
+
+import org.omg.CORBA.PRIVATE_MEMBER;
+
+import AGS.AGS_FitnessCalc;
+import AGS.AGS_Population;
+
+public class AGI_Engine {
+	private final int averageIterations = 1;
+	private final int maxGenerations = 15;
+	private final int populationSize = 1000;
+	private final int numUsers = 4;
+	private AGI_FitnessCalc fitness = new AGI_FitnessCalc(this.numUsers, this.averageIterations);
+	private AGI_FitnessCalc AGSfitness;
+	private static Vector<Vector<Double>> R_preferences;
+	private AGI_Population myPop;
+	Scanner sc = new Scanner(System.in);
+	
+	/**
+	 * Execute IGA
+	 * @return
+	 * @throws IOException
+	 */
+	public double executeIGA(int indiv_i) throws IOException {	
+		/* Cambiar 'op' para elegir leer datos o generar población */
+		int op = 1; 
+		double fittest = -2.0;
+		if(op == 1) {
+			this.fitness.resetValues(averageIterations, numUsers);
+			this.fitness.resetPopulations(averageIterations);
+			for(int j = 0; j < this.averageIterations; j++) {
+			    this.myPop = new AGI_Population(this.populationSize, this.fitness.getNumUsers(), false);
+			    int generationCount = 0;
+				while (generationCount < this.maxGenerations) {
+				    generationCount++;
+					this.myPop = AGI_Algorithm.evolvePopulation(this.myPop); 
+				}
+				   // System.out.println("\n" + "Solution found for AGI!");
+				   // System.out.println("	Generation -> " + (generationCount-1));
+				   // System.out.println("	Genes -> " + myPop.getFittest().getFitness());
+			    this.fitness.calculateMutationPopulation(this.myPop.getFittest(), indiv_i, j);
+				this.fitness.calculateMutationDistribution(j);
+			}
+			 fittest = this.fitness.writeDistribution(this.myPop.getFittest(), averageIterations, indiv_i);	
+		}
+		else if(op == 2) {
+			generatePopulation();
+			System.exit(0);
+		}
+		else 
+			System.out.println("Bye, Bye!");
+		return fittest;
+	}
+	
+	/**
+	 * Generate a new Population to files
+	 * @throws IOException
+	 */
+	public void generatePopulation() throws IOException {
+		System.out.println("ATENTION, new Population for IGA will be generate. Press ENTER to continue");
+		this.sc.nextLine();
+	    AGI_Population myPop = new AGI_Population(this.populationSize, this.fitness.getNumUsers(), true);
+		System.out.println("Data generated");
+	}
+	
+	/**
+	 * 
+	 * @param R_preferences
+	 */
+	public void setR_Preferences(Vector<Vector<Double>> R_preferences) {
+		this.fitness.setPreferences(R_preferences);
+	}
+	
+	/**
+	 * 
+	 * @param R_preferences
+	 */
+	public void setO_Preferences(Vector<Vector<Double>> R_preferences) {
+		this.fitness.setO_Preferences(R_preferences);
+	}
+	
+	/**
+	 * 
+	 */
+	public void setO_Results() {
+		this.fitness.setO_Results(this.averageIterations, this.numUsers);
+	}
+	
+}
+
