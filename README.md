@@ -17,3 +17,6 @@ The thesis was awarded the grade of **Cum Laude**.
     - `ULGA/`: Implementation using ULGA.
 
 Each project directory typically contains the source code (`src/`), compiled binaries (`bin/`), and specific documentation (`README.md`).
+
+---
+*Created by Jonathan Carrero*
