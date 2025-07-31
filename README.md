@@ -4,8 +4,6 @@ This repository contains the main projects developed for the thesis titled **"Op
 
 These projects represent the core developments carried out during the thesis research. Other projects and algorithms developed subsequently were based on the foundations established here.
 
-The thesis was awarded the grade of **Cum Laude**.
-
 ## Directory Structure
 
 - **`Negociaciones_bajo_egalitarian_social_welfare/`**: Contains projects related to negotiation problems under egalitarian social welfare conditions. It includes implementations using both LLGA (Linear Linkage Genetic Algorithm) and ULGA (Unrestricted Linkage Genetic Algorithm).
