@@ -1,4 +1,4 @@
-# Thesis Projects
+## Thesis Projects
 
 This repository contains the main projects developed for the thesis titled **"Optimization and complexity analysis of asset allocations under different social welfare conditions"**.
 
