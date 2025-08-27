@@ -17,4 +17,4 @@ These projects represent the core developments carried out during the thesis res
 Each project directory typically contains the source code (`src/`), compiled binaries (`bin/`), and specific documentation (`README.md`).
 
 ---
-*Created by Jonathan Carrero*
+*These genetic algorithms have been developed and implemented by Jonathan Carrero.*
