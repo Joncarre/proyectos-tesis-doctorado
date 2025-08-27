@@ -1,0 +1,16 @@
+# Ignore everything in this directory
+*
+
+# But not these subdirectories and their contents
+!Egalitarian_project/
+!Egalitarian_project/src/
+!Egalitarian_project/src/data/
+!Egalitarian_project/src/data/**
+!Egalitarian_project/src/main/
+!Egalitarian_project/src/main/**
+
+# Keep the README.md file
+!README.md
+
+# Keep this .gitignore file
+!.gitignore
