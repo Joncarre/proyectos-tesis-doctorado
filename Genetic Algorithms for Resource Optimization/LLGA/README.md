@@ -12,179 +12,179 @@ This Java project implements the **Lower-Level Genetic Algorithm (LLGA)**.
 
 ## Genetic Algorithm Phases
 
-El sistema está compuesto por las siguientes clases principales:
+The system is composed of the following main classes:
 
 ### 1. `Main.java`
-- **Propósito**: Punto de entrada del programa
-- **Funcionalidad**: Instancia la clase `Engine` y maneja las excepciones principales
+- **Purpose**: Program entry point
+- **Functionality**: Instantiates the `Engine` class and handles main exceptions
 
 ### 2. `Engine.java`
-- **Propósito**: Controlador principal del flujo de ejecución
-- **Parámetros de configuración**:
-  - `generations = 100,000`: Número máximo de generaciones
-  - `popSize = 30`: Tamaño de la población
-  - `numUsers = 8`: Número de agentes/usuarios
-  - `pfcIterations = 20`: Iteraciones de preferencias
-- **Funcionalidades**:
-  - Lectura y generación de datos de preferencias
-  - Control del bucle principal de evolución
-  - Gestión de iteraciones promedio para obtener resultados robustos
+- **Purpose**: Main controller for execution flow
+- **Configuration parameters**:
+    - `generations = 100,000`: Maximum number of generations
+    - `popSize = 30`: Population size
+    - `numUsers = 8`: Number of agents/users
+    - `pfcIterations = 20`: Preference iterations
+-
+  - Reading and generation of preference data
+  - Control of the main evolution loop
+  - Management of average iterations for robust results
 
 ### 3. `Individual.java`
-- **Propósito**: Representa una solución candidata (individuo)
-- **Estructura**:
-  - `genes[]`: Array de enteros binarios (0 o 1) de longitud 25
-  - `fitness`: Valor de aptitud del individuo
-- **Funcionalidades**:
-  - Generación aleatoria de individuos
-  - Lectura/escritura desde/hacia archivos
-  - Gestión de genes y cálculo de fitness
+- **Purpose**: Represents a candidate solution (individual)
+- **Structure**:
+  - `genes[]`: Array of binary integers (0 or 1) of length 25
+  - `fitness`: Fitness value of the individual
+- **Features**:
+  - Random generation of individuals
+  - Reading/writing from/to files
+  - Gene management and fitness calculation
 
 ### 4. `Population.java`
-- **Propósito**: Maneja una colección de individuos
-- **Funcionalidades**:
-  - Creación de poblaciones iniciales
-  - Identificación del individuo más apto
-  - Gestión de individuos en la población
+- **Purpose**: Manages a collection of individuals
+- **Features**:
+  - Creation of initial populations
+  - Identification of the fittest individual
+  - Management of individuals in the population
 
 ### 5. `FitnessCalc.java`
-- **Propósito**: Calculadora de fitness y gestión de preferencias
-- **Componentes principales**:
-  - `M_preferences`: Preferencias modificadas de los agentes
-  - `O_preferences`: Preferencias originales (agente 0)
-  - **Función de fitness**: Implementa el criterio **maximin** (maximizar el mínimo)
-- **Funcionalidades**:
-  - Lectura/escritura de preferencias desde/hacia archivos
-  - Cálculo del fitness basado en el principio igualitario
-  - Gestión de variaciones en las preferencias
+- **Purpose**: Fitness calculator and preference management
+- **Main components**:
+  - `M_preferences`: Modified agent preferences
+  - `O_preferences`: Original preferences (agent 0)
+  - **Fitness function**: Implements the **maximin** criterion (maximize the minimum)
+- **Features**:
+  - Reading/writing preferences from/to files
+  - Fitness calculation based on egalitarian principle
+  - Management of preference variations
 
 ### 6. `Algorithm.java`
-- **Propósito**: Implementa los operadores genéticos avanzados
-- **Características destacadas**:
+- **Purpose**: Implements advanced genetic operators
+- **Key features**:
 
-#### Parámetros Adaptativos:
-- **Tasa de mutación dinámica**: Comienza en 3% y decrece gradualmente
-- **Elitismo**: Preserva los 3 mejores individuos
-- **Presión de selección**: 1.8 (balanceada)
+#### Adaptive Parameters:
+- **Dynamic mutation rate**: Starts at 3% and gradually decreases
+- **Elitism**: Preserves the top 3 individuals
+- **Selection pressure**: 1.8 (balanced)
 
-#### Mecanismos Avanzados:
+#### Advanced Mechanisms:
 
-1. **Control de Estancamiento**:
-   - Detección automática de convergencia prematura
-   - Incremento de mutación cuando se detecta estancamiento
-   - Contador de generaciones sin mejora
+1. **Stagnation Control**:
+   - Automatic detection of premature convergence
+   - Increased mutation when stagnation is detected
+   - Counter for generations without improvement
 
-2. **Sistema de Catástrofes**:
-   - Cada 3,000 generaciones se produce una "catástrofe" parcial
-   - Mantiene la élite pero perturba el resto de la población
-   - Ayuda a escapar de óptimos locales
+2. **Catastrophe System**:
+   - Every 3,000 generations, a partial "catastrophe" occurs
+   - Elite is preserved but the rest of the population is perturbed
+   - Helps escape local optima
 
-3. **Fases de Exploración**:
-   - **Fase inicial** (1,000 generaciones): Alta exploración con mutación incrementada
-   - **Fase normal**: Mutación decreciente con recocido simulado
+3. **Exploration Phases**:
+   - **Initial phase** (1,000 generations): High exploration with increased mutation
+   - **Normal phase**: Decreasing mutation with simulated annealing
 
-4. **Operadores de Cruce Múltiples**:
-   - **Cruce uniforme** (60%): Intercambio gen a gen
-   - **Cruce de un punto** (30%): División en un punto
-   - **Cruce de dos puntos** (10%): División en dos puntos
+4. **Multiple Crossover Operators**:
+   - **Uniform crossover** (60%): Gene-by-gene exchange
+   - **One-point crossover** (30%): Division at one point
+   - **Two-point crossover** (10%): Division at two points
 
-5. **Mutaciones Especializadas**:
-   - **Mutación tradicional**: Cambio de un gen (70%)
-   - **Mutación de genes consecutivos** (20%)
-   - **Inversión de segmentos** (10%)
-   - **Mutación disruptiva**: Para alta exploración inicial
+5. **Specialized Mutations**:
+   - **Traditional mutation**: Single gene change (70%)
+   - **Consecutive gene mutation** (20%)
+   - **Segment inversion** (10%)
+   - **Disruptive mutation**: For high initial exploration
 
-6. **Selección Híbrida**:
-   - Combinación de selección determinista y probabilística
-   - Sistema de torneo mejorado
-   - Selección ponderada con ranking exponencial
+6. **Hybrid Selection**:
+   - Combination of deterministic and probabilistic selection
+   - Enhanced tournament system
+   - Weighted selection with exponential ranking
 
 ### 7. `WeightedRandomSelect.java`
-- **Propósito**: Implementa selección ponderada por fitness
-- **Funcionalidad**: Permite selección probabilística donde individuos con mejor fitness tienen mayor probabilidad de ser elegidos
+- **Purpose**: Implements fitness-weighted selection
+- **Functionality**: Enables probabilistic selection where individuals with better fitness have a higher chance of being chosen
 
-## Algoritmo Principal
+## Main Algorithm
 
-### Flujo de Ejecución:
+### Execution Flow:
 
-1. **Inicialización**:
-   - Carga de preferencias de agentes desde archivos
-   - Creación de población inicial aleatoria
+1. **Initialization**:
+   - Loading agent preferences from files
+   - Creation of initial random population
 
-2. **Bucle Evolutivo** (100,000 generaciones):
-   - Evaluación de fitness de todos los individuos
-   - Ordenamiento por fitness (bubble sort)
-   - Detección de estancamiento
-   - Aplicación de catástrofes si es necesario
-   - Selección de padres con presión adaptativa
-   - Cruce con operadores múltiples
-   - Mutación con esquemas adaptativos
-   - Preservación de élite
-   - Reemplazo generacional
+2. **Evolutionary Loop** (100,000 generations):
+   - Evaluation of fitness for all individuals
+   - Sorting by fitness (bubble sort)
+   - Stagnation detection
+   - Application of catastrophes if necessary
+   - Parent selection with adaptive pressure
+   - Crossover with multiple operators
+   - Mutation with adaptive schemes
+   - Elite preservation
+   - Generational replacement
 
-3. **Optimización Continua**:
-   - Ajuste dinámico de parámetros
-   - Monitoreo de progreso
-   - Escape de óptimos locales
+3. **Continuous Optimization**:
+   - Dynamic parameter adjustment
+   - Progress monitoring
+   - Escaping local optima
 
-## Función de Fitness (Criterio Igualitario)
+## Fitness Function (Egalitarian Criterion)
 
-La función de fitness implementa el **principio maximin**:
+The fitness function implements the **maximin principle**:
 
 ```java
-// Para cada individuo, calcula la satisfacción de cada agente
+// For each individual, calculate the satisfaction of each agent
 double[] assignments = new double[numUsers];
 for (int i = 0; i < geneLength; i++) {
     for(int j = 0; j < numUsers; j++)
         assignments[j] += individual.getGene(i) * preferences[j][i]; 
 }
-// Retorna el mínimo (enfoque igualitario)
+// Return the minimum (egalitarian approach)
 return getMinValue(assignments);
 ```
 
-Esta función busca **maximizar el bienestar del agente menos satisfecho**, garantizando soluciones más igualitarias.
+This function aims to **maximize the welfare of the least satisfied agent**, ensuring more egalitarian solutions.
 
-## Características Técnicas Avanzadas
+## Advanced Technical Features
 
-### 1. **Recocido Simulado**
-- Factor de "temperatura" que decrece con las generaciones
-- Mutación más agresiva al inicio, más refinada al final
+### 1. **Simulated Annealing**
+- "Temperature" factor decreases with generations
+- More aggressive mutation at the start, more refined at the end
 
-### 2. **Diversidad Poblacional**
-- Monitoreo de desviación estándar en la élite
-- Incremento automático de mutación cuando hay poca diversidad
+### 2. **Population Diversity**
+- Monitoring of standard deviation in the elite
+- Automatic increase of mutation when diversity is low
 
-### 3. **Elitismo Inteligente**
-- Preservación de los mejores individuos
-- Verificación de que la élite se mantiene tras la evolución
+### 3. **Intelligent Elitism**
+- Preservation of the best individuals
+- Verification that the elite is maintained after evolution
 
-### 4. **Parámetros Auto-adaptativos**
-- Tasa de mutación que evoluciona con el tiempo
-- Presión de selección que se ajusta según el progreso
-- Transición de exploración a explotación
+### 4. **Self-adaptive Parameters**
+- Mutation rate evolves over time
+- Selection pressure adjusts according to progress
+- Transition from exploration to exploitation
 
-## Resultados y Salida
+## Results and Output
 
-El sistema proporciona:
-- Mejor fitness encontrado en cada iteración
-- Representación binaria de la mejor solución
-- Análisis de preferencias originales vs. modificadas
-- Monitoreo del progreso evolutivo
+The system provides:
+- Best fitness found in each iteration
+- Binary representation of the best solution
+- Analysis of original vs. modified preferences
+- Monitoring of evolutionary progress
 
-## Aplicación
+## Application
 
-Este algoritmo genético está específicamente diseñado para:
-- **Negociación automática** entre múltiples partes
-- **Distribución igualitaria** de recursos
-- **Toma de decisiones colectivas** con criterio de equidad
-- **Resolución de conflictos** con enfoque maximin
+This genetic algorithm is specifically designed for:
+- **Automated negotiation** between multiple parties
+- **Egalitarian resource distribution**
+- **Collective decision-making** with fairness criteria
+- **Conflict resolution** with a maximin approach
 
-## Ventajas del Diseño
+## Design Advantages
 
-1. **Robustez**: Múltiples mecanismos anti-estancamiento
-2. **Adaptabilidad**: Parámetros que se ajustan automáticamente  
-3. **Eficiencia**: Balance óptimo entre exploración y explotación
-4. **Escalabilidad**: Diseño modular que permite extensiones
-5. **Equidad**: Enfoque específico en soluciones igualitarias
+1. **Robustness**: Multiple anti-stagnation mechanisms
+2. **Adaptability**: Automatically adjusting parameters  
+3. **Efficiency**: Optimal balance between exploration and exploitation
+4. **Scalability**: Modular design allows extensions
+5. **Fairness**: Specific focus on egalitarian solutions
 
-Este algoritmo genético representa una implementación sofisticada que combina técnicas clásicas con innovaciones modernas para resolver problemas complejos de optimización multi-objetivo con restricciones de equidad.
+This genetic algorithm represents a sophisticated implementation that combines classical techniques with modern innovations to solve complex multi-objective optimization problems with fairness constraints.
