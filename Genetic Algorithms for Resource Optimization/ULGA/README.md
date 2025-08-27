@@ -1,4 +1,4 @@
-# ULGA: Upper-Level Genetic Algorithm for Strategic Preference Misrepresentation 🤖
+# ULGA: Upper-Level Genetic Algorithm for Resource Optimization
 
 This project features the **Upper-Level Genetic Algorithm (ULGA)**, implemented in Java.
 
